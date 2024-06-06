@@ -11,14 +11,18 @@ using ToDoList.DataContext;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(Connection))]
-    [Migration("20240604153438_initialCreate")]
+    [Migration("20240605141251_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true);
 
             modelBuilder.Entity("ToDoList.Model.Category", b =>
                 {
@@ -45,8 +49,10 @@ namespace ToDoList.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Category_FKId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("Category_ID")
-                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Deskripsi")
@@ -59,7 +65,7 @@ namespace ToDoList.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Category_ID");
+                    b.HasIndex("Category_FKId");
 
                     b.HasIndex("Deskripsi")
                         .IsUnique();
@@ -70,8 +76,8 @@ namespace ToDoList.Migrations
             modelBuilder.Entity("ToDoList.Model.Tugas", b =>
                 {
                     b.HasOne("ToDoList.Model.Category", "Category_FK")
-                        .WithMany("Tugas")
-                        .HasForeignKey("Category_ID")
+                        .WithMany("Tugas_NV")
+                        .HasForeignKey("Category_FKId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -80,7 +86,7 @@ namespace ToDoList.Migrations
 
             modelBuilder.Entity("ToDoList.Model.Category", b =>
                 {
-                    b.Navigation("Tugas");
+                    b.Navigation("Tugas_NV");
                 });
 #pragma warning restore 612, 618
         }

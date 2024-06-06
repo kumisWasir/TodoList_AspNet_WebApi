@@ -31,7 +31,7 @@ namespace ToDoList.Repository
         }
 
         public async Task<List<Category>> GetAll(){
-            return await _context.category.Select(c => c).ToListAsync();
+            return await _context.category.ToListAsync();
         }
 
 
@@ -56,6 +56,9 @@ namespace ToDoList.Repository
 
         public async Task<List<Tugas>> GetTugasByCategory (string categoryname){
             var category_result = _context.category.FirstOrDefaultAsync(c => c.Name == categoryname);
+             if (category_result.Result == null){
+                throw new ArgumentNullException(String.Format("Object Null : {0}" , category_result));
+            }
             return await  _context.tugas.Where(t => t.Category_ID == category_result.Result.Id).ToListAsync();
         }
     }

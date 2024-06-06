@@ -22,6 +22,8 @@ namespace ToDoList.Interface
         public  Task<int> Change_Status(int id, TugasSelesai status);
         public Task<int> Change_Category(string newCategory, int id);
         public Task<string> Category_name(int id);
+        public Task<int> Delete_Tugas(int id);
+        public Task <int> Edit_Deskripsi_Tugas(int id , TugasDto tugasDto);
     }
 
 }

@@ -40,8 +40,8 @@ namespace ToDoList.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Create_Category(TugasDto tugasDto){
+        [HttpPost("Change_Category/id")]
+        public async Task<IActionResult> Create_Tugas(TugasDto tugasDto){
             try {
                 await _tugasCrud.Create(tugasDto);
                 return Ok();
@@ -52,7 +52,7 @@ namespace ToDoList.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("Change_Status/id")]
         public async Task<IActionResult> Change_status(int id, TugasSelesai status){
             try{
             await _tugasCrud.Change_Status(id,status);
@@ -64,7 +64,7 @@ namespace ToDoList.Controllers
             }
         }
 
-        [HttpPut("id")]
+        [HttpPut("Change_Category/id")]
         public async Task<IActionResult> Change_category (string newCategory, int id){
             try{
             await _tugasCrud.Change_Category(newCategory,id);
@@ -76,7 +76,33 @@ namespace ToDoList.Controllers
             
             }   
         }
-
         
+        [HttpDelete("id")]
+        public async Task<IActionResult> Delete_tugas(int id){
+            try{
+            await _tugasCrud.Delete_Tugas(id);
+            return Ok();
+            }catch (ArgumentNullException e){
+                return NotFound(e);
+            }catch{
+                return StatusCode(500);
+            
+            }   
+        }
+
+        [HttpPut("Change_Deskripsi_tugas/id")]
+
+        public async Task<IActionResult> Change_Deksipri_Tugas(int id , TugasDto tugasDto){
+             try{
+            await _tugasCrud.Edit_Deskripsi_Tugas(id, tugasDto);
+            return Ok();
+            }catch (ArgumentNullException e){
+                return NotFound(e);
+            }catch{
+                return StatusCode(500);
+            }
+        
+        }
     }
+
 }

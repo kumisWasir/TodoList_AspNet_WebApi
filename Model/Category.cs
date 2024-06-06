@@ -10,8 +10,8 @@ namespace ToDoList.Model
         public int Id{get;set;}
         [Required, MaxLength(200)]
         public string Name {get;set;} = string.Empty;
-         [JsonIgnore]
-        public ICollection<Tugas>? Tugas {get;set;}
+        [JsonIgnore]
+        public virtual ICollection<Tugas>? Tugas_NV {get;set;}
 
     }
     [Flags]
@@ -33,8 +33,8 @@ namespace ToDoList.Model
         public TugasSelesai Status {get;set;}
 
         public int? Category_ID {get;set;}
-        [JsonIgnore]
-        public virtual Category Category_FK {get; set;}
+        [JsonIgnore]      
+        public virtual Category Category_FK {get; set;} = null!;
     }
    
 }

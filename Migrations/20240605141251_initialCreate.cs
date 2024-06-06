@@ -31,14 +31,15 @@ namespace ToDoList.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Deskripsi = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    Category_ID = table.Column<int>(type: "INTEGER", nullable: false)
+                    Category_ID = table.Column<int>(type: "INTEGER", nullable: true),
+                    Category_FKId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tugas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tugas_category_Category_ID",
-                        column: x => x.Category_ID,
+                        name: "FK_tugas_category_Category_FKId",
+                        column: x => x.Category_FKId,
                         principalTable: "category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -51,9 +52,9 @@ namespace ToDoList.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tugas_Category_ID",
+                name: "IX_tugas_Category_FKId",
                 table: "tugas",
-                column: "Category_ID");
+                column: "Category_FKId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tugas_Deskripsi",
